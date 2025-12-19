@@ -10,7 +10,9 @@ def mul(a, b):
 def div(a, b):
     return a / b
 
-print("1.Add 2.Subtract 3.Multiply 4.Divide")
+for i in range(3): 
+    print("\nCalculator Menu")
+    print("1.Add 2.Subtract 3.Multiply 4.Divide")
 choice = int(input("Enter choice: "))
 
 x = float(input("Enter first number: "))
@@ -24,5 +26,5 @@ elif choice == 3:
     print("Result:", mul(x, y))
 elif choice == 4:
     print("Result:", div(x, y))
-else:
-    print("Invalid choice")
+
+
