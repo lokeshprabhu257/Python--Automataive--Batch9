@@ -1,3 +1,4 @@
+from Person import Person
 # Child Class Student (Inheritance)
 class Student(Person):
     def __init__(self, student_id, name):
