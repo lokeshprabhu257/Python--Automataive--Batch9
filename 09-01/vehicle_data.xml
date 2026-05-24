@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Vehicle>
+  <vehicle_name>Honda City</vehicle_name>
+  <mileage>18.4</mileage>
+  <fuel_consumption>5.4</fuel_consumption>
+  <fuel_type>Petrol</fuel_type>
+  <engine_capacity>1498</engine_capacity>
+</Vehicle>

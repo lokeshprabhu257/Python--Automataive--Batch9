@@ -1,0 +1,5 @@
+vehicle_name=Honda City
+mileage=18.4
+fuel_consumption=5.4
+fuel_type=Petrol
+engine_capacity=1498

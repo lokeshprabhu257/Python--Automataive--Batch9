@@ -8,7 +8,6 @@ def test_real_medicle_file():
     expected = ['Allergy', 'Asthma', 'Cardiac Arrest', 
                 'Diabetes', 'Hypertension']
     
-    assert len(result) >= 5 
-    assert result == sorted(set(result))  
-    print(" Your  file works!")
-    print("Found issues:", result)
+    
+    assert result == expected
+

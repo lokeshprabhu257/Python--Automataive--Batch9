@@ -1,67 +1,90 @@
-# ATM Machine Simulation Program
-            #1st 
-print(" : Card inserted :")           # Show message that card is inserted
-pin = input(" enter your pin:")       
+# ATM Simulator Application
 
-if len(pin) != 4:                     # Check if PIN is exactly 4 characters
-    print(" Invalid pin")             
-    exit()                            
+class ATMError(Exception):
+    pass
 
-            #2nd 
-balance = 1000                        # Starting account balance
+class InsufficientFundsError(ATMError):
+    pass
 
-def check_balance():                  # Function to show current balance
-    print("Your balance is:", balance)  # Print balance on screen
+class AuthenticationError(ATMError):
+    pass
 
-             #3rd
-def deposit():                        # Function to deposit money
-    global balance                    # Use the global balance variable
-    amount = input("Enter amount to deposit: ")  
+class CardNotFoundError(ATMError):
+    pass
 
-    if amount.isdigit():              # Check that input has only digits
-        amount = int(amount)          
-        balance = balance + amount    
-        print("Amount deposited successfully:", amount)  # Confirm deposit
-        print("Current balance is:", balance)           
-    else:
-        print("Invalid amount. Numbers only.") 
+# Sample user data
+users = {
+    "1234567890": {"pin": "1234", "balance": 5000, "transactions": []},
+    "9876543210": {"pin": "4321", "balance": 10000, "transactions": []}
+}
 
-             #4th 
-def withdraw():                       # Function to withdraw money
-    global balance                    # Use the global balance variable
-    amount = input("Enter amount to withdraw: ")  # Take withdrawal amount
+def validate_card(card_number):
+    if card_number not in users:
+        raise CardNotFoundError("Card not found.")
+    return True
 
-    if amount.isdigit():              # Check that input has only digits
-        amount = int(amount)          
-        if amount <= balance:         
-            balance = balance - amount  
-            print("Amount withdrawn successfully:", amount)  
-            print("Current balance is:", balance)            
-        else:
-            print("Insufficient balance.")  
-    else:
-        print("Invalid amount. Numbers only.")  
-           
-                #5th 
+def validate_pin(card_number, pin):
+    if users[card_number]["pin"] != pin:
+        raise AuthenticationError("Incorrect PIN.")
+    return True
 
-while True:                           # Main loop to keep ATM running
-    print("\n--- ATM MENU ---")      # Show menu header
-    print("1. Check Balance")        
-    print("2. Deposit Money")       
-    print("3. Withdraw Money")       
-    print("4. Exit")                 
+def check_balance(card_number):
+    balance = users[card_number]["balance"]
+    print(f"Your current balance is: ${balance}")
+    users[card_number]["transactions"].append(f"Balance Inquiry: ${balance}")
+
+def withdraw_cash(card_number, amount):
+    if amount > users[card_number]["balance"]:
+        raise InsufficientFundsError("Insufficient balance.")
+    users[card_number]["balance"] -= amount
+    print(f"Please collect your cash: ${amount}")
+    users[card_number]["transactions"].append(f"Withdrawal: ${amount}")
+
+def transaction_history(card_number):
+    print("Transaction History:")
+    for t in users[card_number]["transactions"]:
+        print(f"- {t}")
+
+def atm_menu(card_number):
+    while True:
+        print("\n--- ATM Menu ---")
+        print("1. Balance Inquiry")
+        print("2. Cash Withdrawal")
+        print("3. Transaction History")
+        print("4. Exit")
+        choice = input("Enter choice: ")
+        
+        try:
+            if choice == "1":
+                check_balance(card_number)
+            elif choice == "2":
+                amount = float(input("Enter amount to withdraw: "))
+                withdraw_cash(card_number, amount)
+            elif choice == "3":
+                transaction_history(card_number)
+            elif choice == "4":
+                print("Thank you for using ATM.")
+                break
+            else:
+                print("Invalid choice. Try again.")
+        except ATMError as e:
+            print(f"Error: {e}")
+        except ValueError:
+            print("Invalid input. Enter numeric values.")
+
+# Main program
+def main():
+    print("--- Welcome to ATM Simulator ---")
+    card_number = input("Enter card number: ")
+    pin = input("Enter PIN: ")
     
-                   #6th        
-    choice = input("Enter your choice: ")  # Read user menu choice
+    try:
+        validate_card(card_number)
+        validate_pin(card_number, pin)
+        print("Authentication successful!")
+        atm_menu(card_number)
+    except ATMError as e:
+        print(f"Error: {e}")
 
-    if choice == '1':               
-        check_balance()              
-    elif choice == '2':             
-        deposit()                   
-    elif choice == '3':             
-        withdraw()                   
-    elif choice == '4':             
-        print("Thank you for using ATM.")  # Exit message
-        break                        # Break loop and end program
-    else:
-        print("Invalid choice. Please try again.")  # Wrong menu input
+if __name__ == "__main__":
+    main()

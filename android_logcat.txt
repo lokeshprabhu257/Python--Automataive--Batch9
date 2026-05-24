@@ -1,0 +1,15 @@
+FATAL EXCEPTION: main
+java.lang.NullPointerException: Attempt to invoke virtual method
+at com.media.player.MainActivity.onCreate(MainActivity.java:45)
+
+FATAL EXCEPTION: main
+java.lang.IllegalStateException: MediaPlayer error
+at com.media.player.AudioService.play(AudioService.java:88)
+
+FATAL EXCEPTION: main
+java.lang.NullPointerException: Attempt to invoke virtual method
+at com.media.player.VideoService.start(VideoService.java:23)
+
+FATAL EXCEPTION: main
+java.lang.OutOfMemoryError: Failed to allocate memory
+at com.media.player.VideoDecoder.decode(VideoDecoder.java:102)

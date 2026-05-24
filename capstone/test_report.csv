@@ -1,0 +1,7 @@
+speed_kmh,expected,actual,status
+0,0,0,PASS
+50,50,50,PASS
+100,100,100,PASS
+150,150,150,PASS
+200,200,200,PASS
+250,0-200,out_of_range,FAIL
